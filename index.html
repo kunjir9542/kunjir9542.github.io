@@ -26,8 +26,8 @@
     <h1 >Average FAO Food Price Index by Decade</h1>
     <p>Use the following visualization below to see how the food price index has changed over the years!</p>
     <h3>Understanding the Price Index</h3>
-    <p>The price index represent the price of the item relative to its price average from 2014-2016</p>
-    <p>For example, a price index of 60 represents a 40% decrease in price relative to the price average from 2014-2016 [1]. Moreover, a price index of 120 represents a 20% increase in price relative to the price average from 2014-2016 [1].</p>
+    <p>The price index represent the price of the item relative to its price average from 2014-2016 [1].</p>
+    <p>For example, a price index of 60 represents a 40% decrease in price relative to the price average from 2014-2016. Moreover, a price index of 120 represents a 20% increase in price relative to the price average from 2014-2016.</p>
     <br><br>
     <button onclick="previous()" disabled="True" id="prev_btn">Previous</button>
     <button onclick="next()" id="next_btn">Next</button>
@@ -92,9 +92,10 @@
             .enter().append("rect")
             .attr("x", function (d, i) {return x(d.type);})
             .attr("width", x.bandwidth())
+            .attr("fill", function(d, i) {return colors[i];})
             .attr("y", function(d, i) {return y(d.value);})
             .attr("height", function(d, i) {return 200 - parseFloat(y(d.value));})
-            .attr("fill", function(d, i) {return colors[i];})
+
             .on("click", function(d, i) {
                 drawYearGraph(categories[i], decade_index, colors[i]);
             })
@@ -276,8 +277,9 @@
 
             // Text Syntax: https://stackoverflow.com/questions/20644415/d3-appending-text-to-a-svg-rectangle
             d3.select("svg")
-            .append("text")
+            .append("g")
             .attr("id", "title")
+            .append("text")
             .attr("x", 0)
             .attr("y", 300)
             .text( category + " Price Index, " + (1990 + 10 * idx) + " - " + (1999 + 10 * idx));
